@@ -36,20 +36,13 @@ module.exports = {
 					'css-loader',
 					{
 						loader: 'postcss-loader',
-						options: {
-							postcssOptions: {
-								// 或者将插件引入写在单独的配置js中
-								//
-								// config: POSTCSSCONFIG,
-								// 版本5.0配置
-								plugins: [require('postcss-preset-env')()],
-								// 版本4.0配置
-								// plugins: () => [
-								//     // 帮助postcss 找到 package.json中 browserslist里面的配置，通过配置加载指定的css兼容性样式
-								// 	require('postcss-preset-env')(),
-								// ],
-							},
-						},
+						// options: {
+						// 	postcssOptions: {
+						// 		// 或者将插件引入写在单独的配置js中
+						// 		//
+	
+						// 	},
+						// },
 					},
 					'less-loader',
 					'sass-loader',

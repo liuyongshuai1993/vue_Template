@@ -10,8 +10,8 @@ module.exports = merge(base, {
 		// },
         static:[
             //该配置项允许配置从目录提供静态文件的选项（默认是 'public' 文件夹）
-            path.resolve(___dirname,'dist'),
-            path.resolve(___dirname,'pulic')
+            path.resolve(__dirname,'dist'),
+            path.resolve(__dirname,'pulic')
         ],
 		compress: true,
         host: 'localhost',
