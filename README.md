@@ -25,3 +25,13 @@
 
 ```
 vue模板 持续更新
+
+
+### 安装babel
+
+npm install -D babel-loader @babel/core @babel/preset-env 
+
+// 代码库
+npm i -S core-js
+
+#### 配置
