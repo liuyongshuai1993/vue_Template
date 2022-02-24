@@ -44,3 +44,12 @@ npm i -S core-js
 
 ``` npm install --save-dev cross-env  
 ```
+
+``` 
+    npm install --save @babel/runtime 
+    这个转译器的另外一个目的就是为你的代码创建一个沙盒环境。如果你使用了 babel-polyfill，它提供了诸如 Promise，Set 以及 Map 之类的内置插件，这些将污染全局作用域。虽然这对于应用程序或命令行工具来说可能是好事，但如果你的代码打算发布为供其他人使用的库，或你无法完全控制代码运行的环境，则会成为问题
+    依赖关系
+    npm install --save-dev @babel/cli @babel/core  @babel/preset-env @babel/runtime-corejs3
+
+```
+

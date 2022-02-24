@@ -1,11 +1,22 @@
 {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "useBuiltIns": "usage", // 使用动态解析语法,根据兼容性转义
-          "corejs":3 //使用corejs3版本得js库来对低版本浏览器做兼容
-        }
-      ]
-    ]
-  }
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"useBuiltIns": "usage", // 使用动态解析语法,根据兼容性转义
+				"corejs": 3 //使用corejs3版本得js库来对低版本浏览器做兼容
+			}
+		]
+	],
+	"plugins": [ 
+		// babel需要的插件
+		//"@babel/plugin-transform-runtime", // 这个插件可以实现一次导入，多次使用，不再是使用多少次就导入多少次，减少代码冗余
+        // 其中之一就是自动移除语法转换后内联的辅助函数（inline Babel helpers），使用@babel/runtime/helpers里的辅助函数来替代。这样就减少了我们手动引入的麻烦。
+		[
+			"@babel/plugin-transform-runtime",
+			{
+				"corejs": 3 // 这样配置需要安装 @babel/runtime-corejs3 包
+			}
+		]
+	]
+}
