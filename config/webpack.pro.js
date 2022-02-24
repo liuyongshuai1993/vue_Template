@@ -1,8 +1,12 @@
 const { merge } = require('webpack-merge')
 const base = require('./webpack.base')
 const path = require('path')
+// 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // 清理文件缓存
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
+console.log(process)
 
 module.exports = merge(base, {
 	mode: 'production',
@@ -14,5 +18,8 @@ module.exports = merge(base, {
         maxEntrypointSize: 10000000,
         maxAssetSize: 30000000
       },
-	plugins: [new CleanWebpackPlugin()],
+	plugins: [
+        new CleanWebpackPlugin(),
+        new BundleAnalyzerPlugin(),
+    ],
 })

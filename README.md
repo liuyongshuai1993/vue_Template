@@ -35,3 +35,12 @@ npm install -D babel-loader @babel/core @babel/preset-env
 npm i -S core-js
 
 #### 配置
+
+
+
+
+- cross-env是一个跨平台设置环境变量的第三方包，它可以让你只配置一行命令，就能轻松地在多个平台设置环境变量
+
+
+``` npm install --save-dev cross-env  
+```
