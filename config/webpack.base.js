@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
 const path = require('path')
 
 module.exports = {
@@ -63,32 +64,30 @@ module.exports = {
 					'sass-loader',
 				],
 			},
-            {
-                // 处理不了html中img图片
+			{
+				// 处理不了html中img图片
 				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-				loader: 'url-loader',  // 依赖file-loader
-                // 如需从 asset loader 中排除来自新 URL 处理的 asset，请添加 dependency: { not: ['url'] } 到 loader 配置中
-                // dependency: { not: ['url'] },
+				loader: 'url-loader', // 依赖file-loader
+				// 如需从 asset loader 中排除来自新 URL 处理的 asset，请添加 dependency: { not: ['url'] } 到 loader 配置中
+				// dependency: { not: ['url'] },
 				options: {
 					//  图片大与8kb 就会被base64处理
 					limit: 8192,
-                    // 关闭es6模块化 使用commonjs解析
+					// 关闭es6模块化 使用commonjs解析
 					esModule: false,
 				},
-                //webpack5.0 当在 webpack 5 中使用旧的 assets loader（如 file-loader/url-loader/raw-loader 等）和 asset 模块时，
-                // 你可能想停止当前 asset 模块的处理，并再次启动处理，这可能会导致 asset 重复，
-                // 你可以通过将 asset 模块的类型设置为 'javascript/auto' 来解决。
+				//webpack5.0 当在 webpack 5 中使用旧的 assets loader（如 file-loader/url-loader/raw-loader 等）和 asset 模块时，
+				// 你可能想停止当前 asset 模块的处理，并再次启动处理，这可能会导致 asset 重复，
+				// 你可以通过将 asset 模块的类型设置为 'javascript/auto' 来解决。
 				type: 'javascript/auto',
 			},
-            {
-                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: 'file-loader',
-                include: [resolve('src/icons/png')],
-                options: {
-                  name: utils.assetsPath('img/[name].[ext]')
-                }
-              },
-            //   {
+			{
+				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+				loader: 'file-loader',
+				include: [path.resolve('src/image')], // 只处理include匹配的目录
+				options: {},
+			},
+			//   {
 			// 	exclude: /\.(css|js|html)$/,
 			// 	// 打包为其他资源
 			// 	type: 'asset/resource',
@@ -113,5 +112,18 @@ module.exports = {
 		}),
 		// css 压缩
 		new MiniCssExtractPlugin(),
+		new PreloadWebpackPlugin({
+			rel: 'preload',
+			as(entry) {
+				//资源类型
+                if (/\.css$/.test(entry)) return 'style';
+                if (/\.woff$/.test(entry)) return 'font';
+                if (/\.(png|jpe?g|gif|svg)(\?.*)?$/.test(entry)) return 'image';
+                return 'script'
+			},
+			include: 'asyncChunks', // preload模块范围，还可取值'initial'|'allChunks'|'allAssets',
+			fileBlacklist: [/\.svg/], // 资源黑名单
+			fileWhitelist: [/\.script/], // 资源白名单
+		}),
 	],
 }

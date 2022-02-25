@@ -8,7 +8,6 @@ const BundleAnalyzerPlugin =
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-console.log(process)
 
 module.exports = merge(base, {
 	mode: 'production',

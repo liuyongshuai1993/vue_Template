@@ -53,3 +53,9 @@ npm i -S core-js
 
 ```
 
+
+### preload-webpack-plugin 预加载  解决样式等 一闪过
+https://blog.csdn.net/vivo_tech/article/details/109485871
+
+
+

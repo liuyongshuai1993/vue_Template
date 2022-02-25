@@ -19,5 +19,6 @@ module.exports = merge(base, {
         // 默认打开浏览器
         open:true
 	},
-    devtool: 'eval-source-map',
+    //原始源代码（仅限行）
+    devtool: 'cheap-module-eval-source-map',
 })
