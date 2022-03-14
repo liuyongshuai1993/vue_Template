@@ -1,7 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
+const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
+
 const path = require('path')
 
 module.exports = {
@@ -38,6 +40,10 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.vue$/,
+				loader: 'vue-loader',
+			},
+			{
 				test: /\.js$/,
 				exclude: /node_modules/, // 不处理该文件夹下的js文件
 				use: {
@@ -49,6 +55,7 @@ module.exports = {
 				// 链式 从后至前；链式调用；链式的每一个loader都可以对我们的源进行转换  逆序的
 				use: [
 					MiniCssExtractPlugin.loader,
+					'vue-style-loader',
 					// 'style-loader',  // 它和mini-css-extract-plugin冲突
 					'css-loader',
 					{
@@ -61,7 +68,7 @@ module.exports = {
 						// },
 					},
 					'less-loader',
-					'sass-loader',
+					'sass-loader'
 				],
 			},
 			{
@@ -116,14 +123,15 @@ module.exports = {
 			rel: 'preload',
 			as(entry) {
 				//资源类型
-                if (/\.css$/.test(entry)) return 'style';
-                if (/\.woff$/.test(entry)) return 'font';
-                if (/\.(png|jpe?g|gif|svg)(\?.*)?$/.test(entry)) return 'image';
-                return 'script'
+				if (/\.css$/.test(entry)) return 'style'
+				if (/\.woff$/.test(entry)) return 'font'
+				if (/\.(png|jpe?g|gif|svg)(\?.*)?$/.test(entry)) return 'image'
+				return 'script'
 			},
 			include: 'asyncChunks', // preload模块范围，还可取值'initial'|'allChunks'|'allAssets',
 			fileBlacklist: [/\.svg/], // 资源黑名单
 			fileWhitelist: [/\.script/], // 资源白名单
 		}),
+		new VueLoaderPlugin(),
 	],
 }
